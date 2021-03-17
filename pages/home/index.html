@@ -1,0 +1,67 @@
+<script type="text/javascript">
+const settings = require(`${api.getAppRoot()}/settings.json`);  
+const winTools = require(`${api.getAppRoot()}/win-tools`);  
+const run = require(`${api.getAppRoot()}/run`);  
+
+ipc.on('my-event', (event, args)=>{
+  console.log({ 'my-event': {args} });
+});
+
+</script>
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Home</title>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+
+    <script type="text/javascript">
+
+    const openFile = async ()=>{
+      const result = await winTools.openFile();
+      console.log({ result });
+    }
+
+    const execCmd = async ( cmd )=>{
+      const result = await run( cmd );
+      // console.log( result.data );
+      return result;
+    }
+
+    window.addEventListener('DOMContentLoaded', async() => {
+      const replaceText = (selector, text) => {
+        const element = document.getElementById(selector)
+        if (element) element.innerText = text
+      }
+
+      for (const type of ['chrome', 'node', 'electron']) {
+        replaceText(`${type}-version`, process.versions[type])
+      }
+
+      // вот так можно установить/вызвать все что есть в массиве "settings.json"
+      for( const item of settings ){
+        const result = await execCmd(item.path);
+        console.log({result});
+      }
+    });
+    </script>
+
+  </head>
+  <body style="background: white;">
+
+    <p>
+      Node.js <span id="node-version"></span>,
+      Chromium <span id="chrome-version"></span>,
+      Electron <span id="electron-version"></span>.
+    </p>
+    <hr/>
+
+    <button onclick="execCmd('calc.exe')">Calc.exe</button>
+    <!-- <button onclick="execCmd('ls -lah /tmp')">ls -lah /tmp</button> -->
+    <button onclick="openFile()">Open-File</button>
+    <button onclick="ipc.send('my-method', { name: 'Bob', age: 123})">My-Method</button>
+
+  </body>
+</html>
+
+

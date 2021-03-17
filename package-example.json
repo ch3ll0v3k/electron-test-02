@@ -1,0 +1,38 @@
+{
+  "name": "prog-installer",
+  "version": "1.0.0",
+  "description": "Prog-Installer info",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+
+  "build-info": "https://www.electron.build/configuration/win#WindowsConfiguration-target",
+  "build": {
+    "appId": "your.id",
+    "win": {
+      "target": "portable",
+      "available-targets": [
+        {
+          "nsis": "(Installer)", 
+          "nsis-web": "(Web installer)", 
+          "portable": "(portable app without installation)", 
+          "AppX": "(Windows Store)"
+        }
+      ]
+    },
+    "linux": {
+      "target": "AppImage"
+    }
+  },
+
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^12.0.1",
+    "electron-builder": "^22.10.5"
+  }
+}

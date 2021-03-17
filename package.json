@@ -1,0 +1,30 @@
+{
+  "name": "prog-installer",
+  "version": "1.0.0",
+  "description": "Prog-Installer info",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "pack:linux": "electron-builder --dir",
+    "dist:linux": "electron-builder",
+    "pack:window": "electron-builder --dir --win",
+    "dist:window": "electron-builder --win"
+  },
+  "build-info": "https://www.electron.build/configuration/win#WindowsConfiguration-target",
+  "build": {
+    "appId": "prog-installer.my-site.com",
+    "win": {
+      "target": "portable"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^12.0.1",
+    "electron-builder": "^22.10.5"
+  }
+}
